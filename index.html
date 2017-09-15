@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>弹幕聊天-HtWorks</title>
+    <script type="text/javascript" src="danmu.js"></script>
+    <script type="text/javascript" src="websocket.js"></script>
+</head>
+<body>
+
+<div id="dm-main">
+    <div id="dm-screen" style="width: 100%; height: 800px;background: #07feff"></div>
+</div>
+<input id="send" style=""> <input type="submit" id="sb" value="发射"> <br/>
+</body>
+</html>
+<script type="application/javascript">
+    let danmaku = new Danmaku('dm-screen', 'dm-canvas', 20);
+    danmaku.play();
+    document.getElementById('sb').addEventListener("click", () =>{
+        let v = document.getElementById('send').value;
+        if(v != ''){
+            send(v);
+//            danmaku.emit(v);
+            document.getElementById('send').value = '';
+        }
+    });
+
+     ws = new WsConnect(
+        (x) => {
+//            let st = document.getElementById('st');
+//            switch  (x) {
+//                case 1 :  st.innerHeight = '成功';
+//                break;
+//                default : st.innerHeight = '失败';
+//            }
+        },
+        (m) => {
+            danmaku.emit(m)
+        }
+
+    );
+    function send(v)
+    {
+        ws.send(v);
+    }
+
+</script>
