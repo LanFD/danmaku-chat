@@ -208,20 +208,22 @@ if($_GET['ajax']){
 </head>
 <body>
 <div class="container-fluid" style="height: 100vh">
-    <div class="row">
-        <div class="col-xs-18">
+    <div class="row" style="margin-top: 10vh; background: #bdbdbd;padding: 2vh">
+        <div class="col-xs-12 col-sm-6 col-md-8">
             音乐资源来源于<a href="http://music.163.com/" target="_blank">网易云</a>
         </div>
-        <div class="col-xs-18">
-            此程序仅用于学习交流,若有任何侵犯合法权益行为请联系 qq:623975749 删除程序
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            本程序仅用于学习交流,若有任何侵犯合法权益行为请联系 qq:623975749 删除程序
         </div>
-        <div class="col-xs-18">
-            此程序已开源于
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            本程序已开源于 <a href="https://github.com/LanFD/music_163" target="_blank">https://github.com/LanFD/music_163</a>
         </div>
     </div>
-
     <div class="form-group center-block"  style="margin-top: 20vh">
-        <input class="form-control" type="text" id="text" value="" style="margin: 1vh auto 0" placeholder="写入关键字">
+        <div class="input-group">
+        <div class="input-group-addon">关键字：</div>
+        <input class="form-control" type="text" id="text" value="" placeholder="写入关键字">
+        </div>
         <br>
          <input class="btn btn-success"  type="submit" id="sb" onclick="getAnother()" value="__切歌__">
 
