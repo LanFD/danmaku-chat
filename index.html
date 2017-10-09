@@ -2,44 +2,95 @@
 <html>
 <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>弹幕聊天-HtWorks</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <script type="text/javascript" src="danmu.js"></script>
     <script type="text/javascript" src="websocket.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+    </style>
 </head>
 <body>
+<div class="container-fluid" style="height: 100vh">
+    <div class="col-md-12" id="dm-screen"
+         style="width: 100%; height:60vh;background: rgba(3,2,3,0.95);opacity: 0.7;margin-top: 2vh;padding: 1vh">
+    </div>
+    <div class="form-group center-block">
+        <input class="form-control" id="send" type="text" placeholder="此处装填" style="width: 100%; margin-top: 1vh">
 
-<div id="dm-main">
-    <div id="dm-screen" style="width: 100%; height: 800px;background: #07feff"></div>
+        <input class="btn btn-default" type="submit" id="sb" value="发射" style="margin: 1vh auto 0">
+    </div>
 </div>
-<input id="send" style=""> <input type="submit" id="sb" value="发射"> <br/>
+
+
 </body>
 </html>
 <script type="application/javascript">
     let danmaku = new Danmaku('dm-screen', 'dm-canvas', 20);
     danmaku.play();
-    document.getElementById('sb').addEventListener("click", () =>{
+
+
+    function randColor()
+    {
+        return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
+    }
+
+    function randTF()
+    {
+        return Math.random() >= 0.5;
+    }
+
+    function fireDanmaku()
+    {
         let v = document.getElementById('send').value;
-        if(v != ''){
+        if (v != '') {
             send(v);
-//            danmaku.emit(v);
             document.getElementById('send').value = '';
         }
-    });
+    }
 
-     ws = new WsConnect(
-        (x) => {
-//            let st = document.getElementById('st');
-//            switch  (x) {
-//                case 1 :  st.innerHeight = '成功';
-//                break;
-//                default : st.innerHeight = '失败';
-//            }
+    (() =>
+    {
+        document.getElementById('sb').addEventListener("click", () =>
+        {
+            fireDanmaku();
+        });
+
+
+        document.body.addEventListener('keypress', (e) =>
+        {
+            let keyCode = e.keyCode || e.which;
+            switch (keyCode) {
+                case 13:
+                    fireDanmaku();
+                    break;
+            }
+            return false;
+        });
+
+
+    })();
+    let ws = new WsConnect(
+        (x) =>
+        {
         },
-        (m) => {
-            danmaku.emit(m)
+        (m) =>
+        {
+            danmaku.emit(
+                {text: m, color: randColor(), shadow: randTF()}
+            )
         }
-
     );
+
+
     function send(v)
     {
         ws.send(v);

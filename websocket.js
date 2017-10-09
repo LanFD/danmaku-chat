@@ -7,7 +7,9 @@ class WsConnect {
         this.websocket = websocket;
         websocket.onopen    = () =>
         {
-            connect(websocket.readyState);
+            if(websocket.readyState){
+                connect();
+            }
         };
         websocket.onmessage = (m) =>
         {
