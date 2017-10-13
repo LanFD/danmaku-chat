@@ -1,1 +1,4 @@
-"# danmaku-chat"  git init git add README.md git commit -m "first commit" git remote add origin https://github.com/LanFD/danmaku-chat.git git push -u origin master
+swoole + canvas 弹幕聊天室<br/>
+
+示例：http://120.78.72.42/flashchat/
+
